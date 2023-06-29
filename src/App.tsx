@@ -3,24 +3,26 @@ import "./App.css";
 import axios from "axios";
 
 const api = axios.create({
-	baseURL: "https://servicodados.ibge.gov.br/api/v1/localidades/estados/",
+	baseURL: "https://infoweb-api.vercel.app/",
 });
 
 const AppNavBar = () => {
 	return (
 		<div className="card">
-			<h1>Lista de tarefas (apenas leitura)</h1>
+			<h1>Lista de unidades federativas do BR</h1>
 		</div>
 	);
 };
 
-const AppTarefas = () => {
+const AppUFLista = () => {
 	const [tarefas, setTarefas] = useState([]);
 
 	const tratarClique = () => {
-		api.get("pegar").then((response) => {
+		api.get("uf").then((response) => {
 			console.info(response.data);
-			const lista = response.data.data.map((item: any) =>  item.sigla);
+			const lista = response.data.data.map((item: any) => 
+			item.sigla
+			);
 			console.info(lista);
 			setTarefas(lista);
 		});
@@ -37,11 +39,21 @@ const AppTarefas = () => {
 	);
 };
 
+const AppUFDetalhe = () => {
+	return(
+		<>
+		</>
+	)
+};
+
 const App = () => {
+	const [uf , setUF] = useState([]);
+	const [ufs , setUFS] = useState([]);
 	return (
 		<>
 			<AppNavBar />
-			<AppTarefas />
+			<AppUFLista />
+			<AppUFDetalhe/>
 		</>
 	);
 };
