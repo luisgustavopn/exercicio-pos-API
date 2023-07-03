@@ -14,46 +14,55 @@ const AppNavBar = () => {
 	);
 };
 
-const AppUFLista = () => {
-	const [tarefas, setTarefas] = useState([]);
+const AppUFDetalhe = (props: any) => {
+	
+	return(
+		<div>
+				<p>{props.uf.sigla}</p>
+				<p>{props.uf.nome}</p>
+		</div>
+	)
+};
 
+const AppUFLista = (props:any) => {
+	
 	const tratarClique = () => {
 		api.get("uf").then((response) => {
 			console.info(response.data);
-			const lista = response.data.data.map((item: any) => 
-			item.sigla
+			const lista = response.data.data.map((item:any , index:any) => 
+				<ul key={index.id}>
+					<li >{item.sigla}</li>
+					{/* <li>{item.nome}</li> */}
+				</ul>
 			);
-			console.info(lista);
-			setTarefas(lista);
+			props.mudarUF(lista);
 		});
 	};
 	return (
+
 		<div className="card">
-			<button onClick={tratarClique}>Pegar tarefas</button>
-			<ul>
-				{tarefas.map((tarefa: string, indice: number) => (
-					<li key={indice}>{tarefa}</li>
+			<button onClick={tratarClique}>Pegar estados</button>
+			<div>
+				{props.uf.map((item:any, indice:any) => (
+					<button key={indice}>{item}</button>
 				))}
-			</ul>
+			</div>
 		</div>
 	);
 };
 
-const AppUFDetalhe = () => {
-	return(
-		<>
-		</>
-	)
-};
+
 
 const App = () => {
-	const [uf , setUF] = useState([]);
+	const [uf , setUF] = useState({sigla: 'RN' , nome: 'Rio Grande do Norte'});
 	const [ufs , setUFS] = useState([]);
+	
 	return (
 		<>
 			<AppNavBar />
-			<AppUFLista />
-			<AppUFDetalhe/>
+			<AppUFDetalhe uf={uf} mudarUF={setUF}/>
+			<AppUFLista uf={ufs} mudarUF = {setUFS}/>
+			
 		</>
 	);
 };
