@@ -1,6 +1,7 @@
+import axios from 'axios';
 import './App.css'
-import { AppNavBar } from './components/AppNavBar'
-import { AppUsuarios } from './components/AppUsuarios'
+//import { AppNavBar } from './components/AppNavBar'
+import { useState } from 'react';
 
 const api = axios.create({
 	baseURL: "https://infoweb-api.vercel.app/",
